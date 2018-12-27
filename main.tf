@@ -2,15 +2,15 @@
  * 
  * AWS VPC Peering Connection Module
  * =================================
- * 
+ *
  * Terraform module, which creates a peering connection between two VPCs and adds routes to the local VPC.
- * 
+ *
  * Usage
  * -----
- * 
+ *
  * ### Single Region Peering
  * **Notice**: You need to declare both providers even with single region peering.
- * 
+ *
  * ```hc1
  * module "vpc_single_region_peering" {
  *   source = "dcos-terraform/vpc-peering/aws"
@@ -19,32 +19,32 @@
  *     aws.this = "aws"
  *     aws.peer = "aws"
  *   }
- * 
+ *
  *   peer_region             = "eu-west-1"
  *   this_vpc_id             = "vpc-aaaaaaaa"
  *   peer_vpc_id             = "vpc-bbbbbbbb"
- * 
+ *
  *   tags = {
  *     Environment = "prod"
  *   }
  * }
  * ```
- * 
+ *
  * ### Cross Region Peering
- * 
+ *
  * ```hc1
  * module "vpc_cross_region_peering" {
  *   source = "dcos-terraform/vpc-peering/aws"
- * 
+ *
  *   providers = {
  *     aws.this = "aws.src"
  *     aws.peer = "aws.dst"
  *   }
- * 
+ *
  *   peer_region             = "us-east-1"
  *   this_vpc_id             = "vpc-aaaaaaaa"
  *   peer_vpc_id             = "vpc-bbbbbbbb"
- * 
+ *
  *   tags = {
  *     Environment = "prod"
  *   }
