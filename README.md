@@ -58,6 +58,7 @@ module "vpc_cross_region_peering" {
     Environment = "prod"
   }
 }
+```
 
 
 ## Inputs
