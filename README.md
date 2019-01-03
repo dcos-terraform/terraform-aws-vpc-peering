@@ -1,3 +1,4 @@
+
 AWS VPC Peering Connection Module
 =================================
 
@@ -18,9 +19,14 @@ module "vpc_single_region_peering" {
     aws.peer = "aws"
   }
 
-  peer_region             = "eu-west-1"
-  this_vpc_id             = "vpc-aaaaaaaa"
-  peer_vpc_id             = "vpc-bbbbbbbb"
+  peer_vpc_id              = "vpc-bbbbbbbb"
+  peer_cidr_block          = "10.0.0.0/16"
+  peer_main_route_table_id = "rtb-aaaaaaaa"
+  peer_security_group_id   = "sg-11111111"
+  this_cidr_block          = "10.1.0.0/16"
+  this_main_route_table_id = "rtb-bbbbbbbb"
+  this_security_group_id   = "sg-00000000"
+  this_vpc_id              = "vpc-aaaaaaaa"
 
   tags = {
     Environment = "prod"
@@ -39,32 +45,34 @@ module "vpc_cross_region_peering" {
     aws.peer = "aws.dst"
   }
 
-  peer_region             = "us-east-1"
-  this_vpc_id             = "vpc-aaaaaaaa"
-  peer_vpc_id             = "vpc-bbbbbbbb"
+  peer_vpc_id              = "vpc-bbbbbbbb"
+  peer_cidr_block          = "10.0.0.0/16"
+  peer_main_route_table_id = "rtb-aaaaaaaa"
+  peer_security_group_id   = "sg-11111111"
+  this_cidr_block          = "10.1.0.0/16"
+  this_main_route_table_id = "rtb-bbbbbbbb"
+  this_security_group_id   = "sg-00000000"
+  this_vpc_id              = "vpc-aaaaaaaa"
 
   tags = {
     Environment = "prod"
   }
 }
-```
-
-License
--------
-Apache 2 Licensed. See LICENSE for full details.
 
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
-| owner_account_id | AWS owner account ID: string | string | `` | no |
-| peer_region | Peer Region Name e.g. us-east-1: string | string | `` | no |
-| peer_vpc_id | Peer VPC ID: string | string | `` | no |
-| peering_id | Provide already existing peering connection id | string | `` | no |
-| security_group_filter | Filter to find the cluster internal security group to authorize cidr_block access | string | `<list>` | no |
+| peer_cidr_block | Peer VPC CIDR Block | string | - | yes |
+| peer_main_route_table_id | Peer main route table ID used to update access to this network | string | - | yes |
+| peer_security_group_id | Peer Security Group ID used to update access to this network | string | - | yes |
+| peer_vpc_id | Peer VPC ID | string | - | yes |
 | tags | Tags: map | map | `<map>` | no |
-| this_vpc_id | This VPC ID: string | string | `` | no |
+| this_cidr_block | This VPC CIDR Block | string | - | yes |
+| this_main_route_table_id | This main route table ID used to update access to peer network | string | - | yes |
+| this_security_group_id | This Security Group ID used to update access to peer network | string | - | yes |
+| this_vpc_id | This VPC ID | string | - | yes |
 
 ## Outputs
 
@@ -72,6 +80,4 @@ Apache 2 Licensed. See LICENSE for full details.
 |------|-------------|
 | peer_vpc_route_table | Public route tables |
 | this_vpc_route_tables | Private route tables |
-| vpc_peering_accept_status | Accept status for the connection |
-| vpc_peering_id | Peering connection ID |
 

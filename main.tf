@@ -19,11 +19,16 @@
  *     aws.this = "aws"
  *     aws.peer = "aws"
  *   }
- * 
- *   peer_region             = "eu-west-1"
- *   this_vpc_id             = "vpc-aaaaaaaa"
- *   peer_vpc_id             = "vpc-bbbbbbbb"
- * 
+ *
+ *   peer_vpc_id              = "vpc-bbbbbbbb"
+ *   peer_cidr_block          = "10.0.0.0/16"
+ *   peer_main_route_table_id = "rtb-aaaaaaaa"
+ *   peer_security_group_id   = "sg-11111111"
+ *   this_cidr_block          = "10.1.0.0/16"
+ *   this_main_route_table_id = "rtb-bbbbbbbb"
+ *   this_security_group_id   = "sg-00000000"
+ *   this_vpc_id              = "vpc-aaaaaaaa"
+ *
  *   tags = {
  *     Environment = "prod"
  *   }
@@ -40,11 +45,16 @@
  *     aws.this = "aws.src"
  *     aws.peer = "aws.dst"
  *   }
- * 
- *   peer_region             = "us-east-1"
- *   this_vpc_id             = "vpc-aaaaaaaa"
- *   peer_vpc_id             = "vpc-bbbbbbbb"
- * 
+ *
+ *   peer_vpc_id              = "vpc-bbbbbbbb"
+ *   peer_cidr_block          = "10.0.0.0/16"
+ *   peer_main_route_table_id = "rtb-aaaaaaaa"
+ *   peer_security_group_id   = "sg-11111111"
+ *   this_cidr_block          = "10.1.0.0/16"
+ *   this_main_route_table_id = "rtb-bbbbbbbb"
+ *   this_security_group_id   = "sg-00000000"
+ *   this_vpc_id              = "vpc-aaaaaaaa"
+ *
  *   tags = {
  *     Environment = "prod"
  *   }
@@ -63,23 +73,23 @@ provider "aws" {
 # Create a route
 resource "aws_route" "this_rt" {
   provider                  = "aws.this"
-  route_table_id            = "${data.aws_vpc.this.main_route_table_id}"
-  destination_cidr_block    = "${data.aws_vpc.peer.cidr_block}"
+  route_table_id            = "${var.this_main_route_table_id}"
+  destination_cidr_block    = "${var.peer_cidr_block}"
   vpc_peering_connection_id = "${aws_vpc_peering_connection.peering.id}"
 }
 
 ## Create a route
 resource "aws_route" "peer_rt" {
   provider                  = "aws.peer"
-  route_table_id            = "${data.aws_vpc.peer.main_route_table_id}"
-  destination_cidr_block    = "${data.aws_vpc.this.cidr_block}"
+  route_table_id            = "${var.peer_main_route_table_id}"
+  destination_cidr_block    = "${var.this_cidr_block}"
   vpc_peering_connection_id = "${aws_vpc_peering_connection.peering.id}"
 }
 
 resource "aws_vpc_peering_connection" "peering" {
   provider    = "aws.this"
-  vpc_id      = "${data.aws_vpc.this.id}"
-  peer_vpc_id = "${data.aws_vpc.peer.id}"
+  vpc_id      = "${var.this_vpc_id}"
+  peer_vpc_id = "${var.peer_vpc_id}"
   peer_region = "${data.aws_region.peer.name}"
 
   tags = "${merge(var.tags, map("Name", "VPC Peering between default and bursting"))}"
@@ -100,9 +110,9 @@ resource "aws_security_group_rule" "this_sg" {
   from_port   = 0
   to_port     = 65535
   protocol    = "all"
-  cidr_blocks = ["${data.aws_vpc.peer.cidr_block}"]
+  cidr_blocks = ["${var.peer_cidr_block}"]
 
-  security_group_id = "${data.aws_security_group.this.id}"
+  security_group_id = "${var.this_security_group_id}"
 }
 
 resource "aws_security_group_rule" "peer_sg" {
@@ -111,7 +121,7 @@ resource "aws_security_group_rule" "peer_sg" {
   from_port   = 0
   to_port     = 65535
   protocol    = "all"
-  cidr_blocks = ["${data.aws_vpc.this.cidr_block}"]
+  cidr_blocks = ["${var.this_cidr_block}"]
 
-  security_group_id = "${data.aws_security_group.peer.id}"
+  security_group_id = "${var.peer_security_group_id}"
 }
