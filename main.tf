@@ -93,7 +93,9 @@ resource "aws_vpc_peering_connection" "peering" {
   peer_vpc_id = "${var.peer_vpc_id}"
   peer_region = "${data.aws_region.peer.name}"
 
-  tags = "${merge(var.tags, map("Name", "VPC Peering between default and bursting"))}"
+  tags = "${merge(var.tags, map("Name", "Initiator: VPC Peering between default and remote",
+                                "accepter_vpc", var.peer_vpc_id,
+                                "initiator_vpc", var.this_vpc_id))}"
 }
 
 # Accepter's side of the connection.
@@ -102,7 +104,9 @@ resource "aws_vpc_peering_connection_accepter" "peer" {
   vpc_peering_connection_id = "${aws_vpc_peering_connection.peering.id}"
   auto_accept               = true
 
-  tags = "${merge(var.tags, map("Name", "Accepter"))}"
+  tags = "${merge(var.tags, map("Name", "Accepter",
+                                "accepter_vpc", var.peer_vpc_id,
+                                "initiator_vpc", var.this_vpc_id))}"
 }
 
 resource "aws_security_group_rule" "this_sg" {
