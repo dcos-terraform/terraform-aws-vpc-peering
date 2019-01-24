@@ -6,6 +6,7 @@ variable "local_cidr_block" {
 variable "local_main_route_table_id" {
   description = "Local main route table ID used to update access to remote network"
   type        = "string"
+  default     = ""
 }
 
 variable "local_security_group_id" {
@@ -21,6 +22,7 @@ variable "remote_cidr_block" {
 variable "remote_main_route_table_id" {
   description = "Remote main route table ID used to update access to local network"
   type        = "string"
+  default     = ""
 }
 
 variable "remote_security_group_id" {

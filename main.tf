@@ -90,7 +90,7 @@ data "aws_route_tables" "remote_vpc_rts" {
 # Create a route
 resource "aws_route" "local_rt" {
   provider                  = "aws.local"
-  route_table_id            = "${var.local_main_route_table_id}"
+  route_table_id            = "${coalesce(var.local_main_route_table_id, data.aws_route_tables.local_vpc_rts.id)}"
   destination_cidr_block    = "${var.remote_cidr_block}"
   vpc_peering_connection_id = "${aws_vpc_peering_connection.peering.id}"
 }
@@ -98,7 +98,7 @@ resource "aws_route" "local_rt" {
 ## Create a route
 resource "aws_route" "remote_rt" {
   provider                  = "aws.remote"
-  route_table_id            = "${var.remote_main_route_table_id}"
+  route_table_id            = "${coalesce(var.remote_main_route_table_id, data.aws_route_tables.remote_vpc_rts.id)}"
   destination_cidr_block    = "${var.local_cidr_block}"
   vpc_peering_connection_id = "${aws_vpc_peering_connection.peering.id}"
 }

@@ -66,11 +66,11 @@ module "vpc_cross_region_peering" {
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
 | local_cidr_block | local VPC CIDR Block | string | - | yes |
-| local_main_route_table_id | Local main route table ID used to update access to remote network | string | - | yes |
+| local_main_route_table_id | Local main route table ID used to update access to remote network | string | `` | no |
 | local_security_group_id | Local Security Group ID used to update access to remote network | string | - | yes |
 | local_vpc_id | Local VPC ID | string | - | yes |
 | remote_cidr_block | Remote VPC CIDR Block | string | - | yes |
-| remote_main_route_table_id | Remote main route table ID used to update access to local network | string | - | yes |
+| remote_main_route_table_id | Remote main route table ID used to update access to local network | string | `` | no |
 | remote_security_group_id | Remote Security Group ID used to update access to local network | string | - | yes |
 | remote_vpc_id | Remote VPC ID | string | - | yes |
 | tags | Add custom tags to all resources | map | `<map>` | no |
