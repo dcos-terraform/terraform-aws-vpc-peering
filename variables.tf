@@ -1,40 +1,40 @@
-variable "this_cidr_block" {
-  description = "This VPC CIDR Block"
+variable "local_cidr_block" {
+  description = "local VPC CIDR Block"
   type        = "string"
 }
 
-variable "this_main_route_table_id" {
-  description = "This main route table ID used to update access to peer network"
+variable "local_main_route_table_id" {
+  description = "Local main route table ID used to update access to remote network"
   type        = "string"
 }
 
-variable "this_security_group_id" {
-  description = "This Security Group ID used to update access to peer network"
+variable "local_security_group_id" {
+  description = "Local Security Group ID used to update access to remote network"
   type        = "string"
 }
 
-variable "peer_cidr_block" {
-  description = "Peer VPC CIDR Block"
+variable "remote_cidr_block" {
+  description = "Remote VPC CIDR Block"
   type        = "string"
 }
 
-variable "peer_main_route_table_id" {
-  description = "Peer main route table ID used to update access to this network"
+variable "remote_main_route_table_id" {
+  description = "Remote main route table ID used to update access to local network"
   type        = "string"
 }
 
-variable "peer_security_group_id" {
-  description = "Peer Security Group ID used to update access to this network"
+variable "remote_security_group_id" {
+  description = "Remote Security Group ID used to update access to local network"
   type        = "string"
 }
 
-variable "peer_vpc_id" {
-  description = "Peer VPC ID"
+variable "remote_vpc_id" {
+  description = "Remote VPC ID"
   type        = "string"
 }
 
-variable "this_vpc_id" {
-  description = "This VPC ID"
+variable "local_vpc_id" {
+  description = "Local VPC ID"
   type        = "string"
 }
 
