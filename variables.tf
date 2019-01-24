@@ -39,7 +39,7 @@ variable "local_vpc_id" {
 }
 
 variable "tags" {
-  description = "Tags: map"
+  description = "Add custom tags to all resources"
   type        = "map"
   default     = {}
 }

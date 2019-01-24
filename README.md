@@ -73,7 +73,7 @@ module "vpc_cross_region_peering" {
 | remote_main_route_table_id | Remote main route table ID used to update access to local network | string | - | yes |
 | remote_security_group_id | Remote Security Group ID used to update access to local network | string | - | yes |
 | remote_vpc_id | Remote VPC ID | string | - | yes |
-| tags | Tags: map | map | `<map>` | no |
+| tags | Add custom tags to all resources | map | `<map>` | no |
 
 ## Outputs
 
