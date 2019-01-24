@@ -104,10 +104,10 @@ resource "aws_route" "remote_rt" {
 }
 
 resource "aws_vpc_peering_connection" "peering" {
-  provider      = "aws.local"
-  vpc_id        = "${var.local_vpc_id}"
-  remote_vpc_id = "${var.remote_vpc_id}"
-  remote_region = "${data.aws_region.remote.name}"
+  provider    = "aws.local"
+  vpc_id      = "${var.local_vpc_id}"
+  peer_vpc_id = "${var.remote_vpc_id}"
+  peer_region = "${data.aws_region.remote.name}"
 
   tags = "${merge(var.tags, map("Name", "VPC Peering between default and bursting"))}"
 }
