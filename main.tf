@@ -21,10 +21,10 @@
  *   }
  *
  *   remote_vpc_id              = "vpc-bbbbbbbb"
- *   remote_cidr_block          = "10.0.0.0/16"
+ *   remote_subnet_range          = "10.0.0.0/16"
  *   remote_main_route_table_id = "rtb-aaaaaaaa"
  *   remote_security_group_id   = "sg-11111111"
- *   local_cidr_block          = "10.1.0.0/16"
+ *   local_subnet_range          = "10.1.0.0/16"
  *   local_main_route_table_id = "rtb-bbbbbbbb"
  *   local_security_group_id   = "sg-00000000"
  *   local_vpc_id              = "vpc-aaaaaaaa"
@@ -47,10 +47,10 @@
  *   }
  *
  *   remote_vpc_id              = "vpc-bbbbbbbb"
- *   remote_cidr_block          = "10.0.0.0/16"
+ *   remote_subnet_range          = "10.0.0.0/16"
  *   remote_main_route_table_id = "rtb-aaaaaaaa"
  *   remote_security_group_id   = "sg-11111111"
- *   local_cidr_block          = "10.1.0.0/16"
+ *   local_subnet_range          = "10.1.0.0/16"
  *   local_main_route_table_id = "rtb-bbbbbbbb"
  *   local_security_group_id   = "sg-00000000"
  *   local_vpc_id              = "vpc-aaaaaaaa"
@@ -92,19 +92,19 @@ data "aws_route_table" "remote_vpc_rt" {
 
 data "aws_vpc" "local" {
   provider = "aws.local"
-  id = "${var.local_vpc_id}"
+  id       = "${var.local_vpc_id}"
 }
 
 data "aws_vpc" "remote" {
   provider = "aws.remote"
-  id = "${var.remote_vpc_id}"
+  id       = "${var.remote_vpc_id}"
 }
 
 # Create a route
 resource "aws_route" "local_rt" {
   provider                  = "aws.local"
   route_table_id            = "${coalesce(var.local_main_route_table_id, data.aws_vpc.local.main_route_table_id)}"
-  destination_cidr_block    = "${var.remote_cidr_block}"
+  destination_cidr_block    = "${var.remote_subnet_range}"
   vpc_peering_connection_id = "${aws_vpc_peering_connection.peering.id}"
 }
 
@@ -112,7 +112,7 @@ resource "aws_route" "local_rt" {
 resource "aws_route" "remote_rt" {
   provider                  = "aws.remote"
   route_table_id            = "${coalesce(var.remote_main_route_table_id, data.aws_vpc.remote.main_route_table_id)}"
-  destination_cidr_block    = "${var.local_cidr_block}"
+  destination_cidr_block    = "${var.local_subnet_range}"
   vpc_peering_connection_id = "${aws_vpc_peering_connection.peering.id}"
 }
 
@@ -140,7 +140,7 @@ resource "aws_security_group_rule" "local_sg" {
   from_port   = 0
   to_port     = 65535
   protocol    = "all"
-  cidr_blocks = ["${var.remote_cidr_block}"]
+  cidr_blocks = ["${var.remote_subnet_range}"]
 
   security_group_id = "${var.local_security_group_id}"
 }
@@ -151,7 +151,7 @@ resource "aws_security_group_rule" "remote_sg" {
   from_port   = 0
   to_port     = 65535
   protocol    = "all"
-  cidr_blocks = ["${var.local_cidr_block}"]
+  cidr_blocks = ["${var.local_subnet_range}"]
 
   security_group_id = "${var.remote_security_group_id}"
 }

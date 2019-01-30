@@ -1,5 +1,5 @@
-variable "local_cidr_block" {
-  description = "local VPC CIDR Block"
+variable "local_subnet_range" {
+  description = "Local VPC subnet range in CIDR format"
   type        = "string"
 }
 
@@ -14,8 +14,8 @@ variable "local_security_group_id" {
   type        = "string"
 }
 
-variable "remote_cidr_block" {
-  description = "Remote VPC CIDR Block"
+variable "remote_subnet_range" {
+  description = "Remote VPC subnet range in CIDR format"
   type        = "string"
 }
 

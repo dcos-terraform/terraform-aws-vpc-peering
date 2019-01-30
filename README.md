@@ -20,10 +20,10 @@ module "vpc_single_region_peering" {
   }
 
   remote_vpc_id              = "vpc-bbbbbbbb"
-  remote_cidr_block          = "10.0.0.0/16"
+  remote_subnet_range          = "10.0.0.0/16"
   remote_main_route_table_id = "rtb-aaaaaaaa"
   remote_security_group_id   = "sg-11111111"
-  local_cidr_block          = "10.1.0.0/16"
+  local_subnet_range          = "10.1.0.0/16"
   local_main_route_table_id = "rtb-bbbbbbbb"
   local_security_group_id   = "sg-00000000"
   local_vpc_id              = "vpc-aaaaaaaa"
@@ -46,10 +46,10 @@ module "vpc_cross_region_peering" {
   }
 
   remote_vpc_id              = "vpc-bbbbbbbb"
-  remote_cidr_block          = "10.0.0.0/16"
+  remote_subnet_range          = "10.0.0.0/16"
   remote_main_route_table_id = "rtb-aaaaaaaa"
   remote_security_group_id   = "sg-11111111"
-  local_cidr_block          = "10.1.0.0/16"
+  local_subnet_range          = "10.1.0.0/16"
   local_main_route_table_id = "rtb-bbbbbbbb"
   local_security_group_id   = "sg-00000000"
   local_vpc_id              = "vpc-aaaaaaaa"
@@ -65,13 +65,13 @@ module "vpc_cross_region_peering" {
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
-| local_cidr_block | local VPC CIDR Block | string | - | yes |
 | local_main_route_table_id | Local main route table ID used to update access to remote network | string | `` | no |
 | local_security_group_id | Local Security Group ID used to update access to remote network | string | - | yes |
+| local_subnet_range | Local VPC subnet range in CIDR format | string | - | yes |
 | local_vpc_id | Local VPC ID | string | - | yes |
-| remote_cidr_block | Remote VPC CIDR Block | string | - | yes |
 | remote_main_route_table_id | Remote main route table ID used to update access to local network | string | `` | no |
 | remote_security_group_id | Remote Security Group ID used to update access to local network | string | - | yes |
+| remote_subnet_range | Remote VPC subnet range in CIDR format | string | - | yes |
 | remote_vpc_id | Remote VPC ID | string | - | yes |
 | tags | Add custom tags to all resources | map | `<map>` | no |
 
@@ -79,6 +79,6 @@ module "vpc_cross_region_peering" {
 
 | Name | Description |
 |------|-------------|
-| local_vpc_route_tables | Private route tables |
-| remote_vpc_route_table | Public route tables |
+| local_vpc_route_table | Private route table |
+| remote_vpc_route_table | Public route table |
 
