@@ -133,25 +133,3 @@ resource "aws_vpc_peering_connection_accepter" "remote" {
 
   tags = "${merge(var.tags, map("Name", "Accepter"))}"
 }
-
-resource "aws_security_group_rule" "local_sg" {
-  provider    = "aws.local"
-  type        = "ingress"
-  from_port   = 0
-  to_port     = 65535
-  protocol    = "all"
-  cidr_blocks = ["${var.remote_subnet_range}"]
-
-  security_group_id = "${var.local_security_group_id}"
-}
-
-resource "aws_security_group_rule" "remote_sg" {
-  provider    = "aws.remote"
-  type        = "ingress"
-  from_port   = 0
-  to_port     = 65535
-  protocol    = "all"
-  cidr_blocks = ["${var.local_subnet_range}"]
-
-  security_group_id = "${var.remote_security_group_id}"
-}

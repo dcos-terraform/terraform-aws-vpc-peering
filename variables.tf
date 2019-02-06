@@ -9,11 +9,6 @@ variable "local_main_route_table_id" {
   default     = ""
 }
 
-variable "local_security_group_id" {
-  description = "Local Security Group ID used to update access to remote network"
-  type        = "string"
-}
-
 variable "remote_subnet_range" {
   description = "Remote VPC subnet range in CIDR format"
   type        = "string"
@@ -23,11 +18,6 @@ variable "remote_main_route_table_id" {
   description = "Remote main route table ID used to update access to local network"
   type        = "string"
   default     = ""
-}
-
-variable "remote_security_group_id" {
-  description = "Remote Security Group ID used to update access to local network"
-  type        = "string"
 }
 
 variable "remote_vpc_id" {
