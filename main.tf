@@ -20,14 +20,10 @@
  *     aws.remote = "aws"
  *   }
  *
- *   remote_vpc_id              = "vpc-bbbbbbbb"
- *   remote_subnet_range          = "10.0.0.0/16"
- *   remote_main_route_table_id = "rtb-aaaaaaaa"
- *   remote_security_group_id   = "sg-11111111"
- *   local_subnet_range          = "10.1.0.0/16"
- *   local_main_route_table_id = "rtb-bbbbbbbb"
- *   local_security_group_id   = "sg-00000000"
- *   local_vpc_id              = "vpc-aaaaaaaa"
+ *   remote_vpc_id       = "vpc-bbbbbbbb"
+ *   remote_subnet_range = "10.0.0.0/16"
+ *   local_subnet_range  = "10.1.0.0/16"
+ *   local_vpc_id        = "vpc-aaaaaaaa"
  *
  *   tags = {
  *     Environment = "prod"
@@ -42,18 +38,14 @@
  *   source = "dcos-terraform/vpc-peering/aws"
  * 
  *   providers = {
- *     aws.local = "aws.src"
+ *     aws.local  = "aws.src"
  *     aws.remote = "aws.dst"
  *   }
  *
- *   remote_vpc_id              = "vpc-bbbbbbbb"
- *   remote_subnet_range          = "10.0.0.0/16"
- *   remote_main_route_table_id = "rtb-aaaaaaaa"
- *   remote_security_group_id   = "sg-11111111"
- *   local_subnet_range          = "10.1.0.0/16"
- *   local_main_route_table_id = "rtb-bbbbbbbb"
- *   local_security_group_id   = "sg-00000000"
- *   local_vpc_id              = "vpc-aaaaaaaa"
+ *   remote_vpc_id       = "vpc-bbbbbbbb"
+ *   remote_subnet_range = "10.0.0.0/16"
+ *   local_subnet_range  = "10.1.0.0/16"
+ *   local_vpc_id        = "vpc-aaaaaaaa"
  *
  *   tags = {
  *     Environment = "prod"
@@ -76,19 +68,6 @@ data "aws_caller_identity" "current" {}
 data "aws_region" "remote" {
   provider = "aws.remote"
 }
-
-/*
-data "aws_route_table" "local_vpc_rt" {
-  provider = "aws.local"
-  vpc_id   = "${var.local_vpc_id}"
-}
-
-data "aws_route_table" "remote_vpc_rt" {
-  provider = "aws.remote"
-  vpc_id   = "${var.remote_vpc_id}"
-  subnet_id = "subnet-05e007e946ff14426"
-}
-*/
 
 data "aws_vpc" "local" {
   provider = "aws.local"
