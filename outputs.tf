@@ -1,14 +1,9 @@
-locals {
-  this_vpc_route_tables = "${compact(concat(data.aws_route_tables.this_vpc_rts.ids, list("")))}"
-  peer_vpc_route_tables = "${compact(concat(data.aws_route_tables.peer_vpc_rts.ids, list("")))}"
+output "local_vpc_route_table" {
+  description = "Private route table"
+  value       = "${data.aws_vpc.local.main_route_table_id}"
 }
 
-output "this_vpc_route_tables" {
-  description = "Private route tables"
-  value       = ["${local.this_vpc_route_tables}"]
-}
-
-output "peer_vpc_route_table" {
-  description = "Public route tables"
-  value       = ["${local.peer_vpc_route_tables}"]
+output "remote_vpc_route_table" {
+  description = "Public route table"
+  value       = "${data.aws_vpc.remote.main_route_table_id}"
 }

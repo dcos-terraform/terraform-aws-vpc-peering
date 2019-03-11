@@ -1,45 +1,37 @@
-variable "this_cidr_block" {
-  description = "This VPC CIDR Block"
+variable "local_subnet_range" {
+  description = "Local VPC subnet range in CIDR format"
   type        = "string"
 }
 
-variable "this_main_route_table_id" {
-  description = "This main route table ID used to update access to peer network"
+variable "local_main_route_table_id" {
+  description = "Local main route table ID used to update access to remote network"
+  type        = "string"
+  default     = ""
+}
+
+variable "remote_subnet_range" {
+  description = "Remote VPC subnet range in CIDR format"
   type        = "string"
 }
 
-variable "this_security_group_id" {
-  description = "This Security Group ID used to update access to peer network"
+variable "remote_main_route_table_id" {
+  description = "Remote main route table ID used to update access to local network"
+  type        = "string"
+  default     = ""
+}
+
+variable "remote_vpc_id" {
+  description = "Remote VPC ID"
   type        = "string"
 }
 
-variable "peer_cidr_block" {
-  description = "Peer VPC CIDR Block"
-  type        = "string"
-}
-
-variable "peer_main_route_table_id" {
-  description = "Peer main route table ID used to update access to this network"
-  type        = "string"
-}
-
-variable "peer_security_group_id" {
-  description = "Peer Security Group ID used to update access to this network"
-  type        = "string"
-}
-
-variable "peer_vpc_id" {
-  description = "Peer VPC ID"
-  type        = "string"
-}
-
-variable "this_vpc_id" {
-  description = "This VPC ID"
+variable "local_vpc_id" {
+  description = "Local VPC ID"
   type        = "string"
 }
 
 variable "tags" {
-  description = "Tags: map"
+  description = "Add custom tags to all resources"
   type        = "map"
   default     = {}
 }

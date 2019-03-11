@@ -15,18 +15,14 @@ module "vpc_single_region_peering" {
   source = "dcos-terraform/vpc-peering/aws"
 
   providers = {
-    aws.this = "aws"
-    aws.peer = "aws"
+    aws.local = "aws"
+    aws.remote = "aws"
   }
 
-  peer_vpc_id              = "vpc-bbbbbbbb"
-  peer_cidr_block          = "10.0.0.0/16"
-  peer_main_route_table_id = "rtb-aaaaaaaa"
-  peer_security_group_id   = "sg-11111111"
-  this_cidr_block          = "10.1.0.0/16"
-  this_main_route_table_id = "rtb-bbbbbbbb"
-  this_security_group_id   = "sg-00000000"
-  this_vpc_id              = "vpc-aaaaaaaa"
+  remote_vpc_id       = "vpc-bbbbbbbb"
+  remote_subnet_range = "10.0.0.0/16"
+  local_subnet_range  = "10.1.0.0/16"
+  local_vpc_id        = "vpc-aaaaaaaa"
 
   tags = {
     Environment = "prod"
@@ -41,18 +37,14 @@ module "vpc_cross_region_peering" {
   source = "dcos-terraform/vpc-peering/aws"
 
   providers = {
-    aws.this = "aws.src"
-    aws.peer = "aws.dst"
+    aws.local  = "aws.src"
+    aws.remote = "aws.dst"
   }
 
-  peer_vpc_id              = "vpc-bbbbbbbb"
-  peer_cidr_block          = "10.0.0.0/16"
-  peer_main_route_table_id = "rtb-aaaaaaaa"
-  peer_security_group_id   = "sg-11111111"
-  this_cidr_block          = "10.1.0.0/16"
-  this_main_route_table_id = "rtb-bbbbbbbb"
-  this_security_group_id   = "sg-00000000"
-  this_vpc_id              = "vpc-aaaaaaaa"
+  remote_vpc_id       = "vpc-bbbbbbbb"
+  remote_subnet_range = "10.0.0.0/16"
+  local_subnet_range  = "10.1.0.0/16"
+  local_vpc_id        = "vpc-aaaaaaaa"
 
   tags = {
     Environment = "prod"
@@ -65,20 +57,18 @@ module "vpc_cross_region_peering" {
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
-| peer_cidr_block | Peer VPC CIDR Block | string | - | yes |
-| peer_main_route_table_id | Peer main route table ID used to update access to this network | string | - | yes |
-| peer_security_group_id | Peer Security Group ID used to update access to this network | string | - | yes |
-| peer_vpc_id | Peer VPC ID | string | - | yes |
-| tags | Tags: map | map | `<map>` | no |
-| this_cidr_block | This VPC CIDR Block | string | - | yes |
-| this_main_route_table_id | This main route table ID used to update access to peer network | string | - | yes |
-| this_security_group_id | This Security Group ID used to update access to peer network | string | - | yes |
-| this_vpc_id | This VPC ID | string | - | yes |
+| local_main_route_table_id | Local main route table ID used to update access to remote network | string | `` | no |
+| local_subnet_range | Local VPC subnet range in CIDR format | string | - | yes |
+| local_vpc_id | Local VPC ID | string | - | yes |
+| remote_main_route_table_id | Remote main route table ID used to update access to local network | string | `` | no |
+| remote_subnet_range | Remote VPC subnet range in CIDR format | string | - | yes |
+| remote_vpc_id | Remote VPC ID | string | - | yes |
+| tags | Add custom tags to all resources | map | `<map>` | no |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| peer_vpc_route_table | Public route tables |
-| this_vpc_route_tables | Private route tables |
+| local_vpc_route_table | Private route table |
+| remote_vpc_route_table | Public route table |
 
