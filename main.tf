@@ -1,20 +1,20 @@
 /**
- * 
+ *
  * AWS VPC Peering Connection Module
  * =================================
- * 
+ *
  * Terraform module, which creates a peering connection between two VPCs and adds routes to the local VPC.
- * 
+ *
  * Usage
  * -----
- * 
+ *
  * ### Single Region Peering
  * **Notice**: You need to declare both providers even with single region peering.
- * 
+ *
  * ```hc1
  * module "vpc_single_region_peering" {
  *   source = "dcos-terraform/vpc-peering/aws"
- * 
+ *
  *   providers = {
  *     aws.local = "aws"
  *     aws.remote = "aws"
@@ -30,13 +30,13 @@
  *   }
  * }
  * ```
- * 
+ *
  * ### Cross Region Peering
- * 
+ *
  * ```hc1
  * module "vpc_cross_region_peering" {
  *   source = "dcos-terraform/vpc-peering/aws"
- * 
+ *
  *   providers = {
  *     aws.local  = "aws.src"
  *     aws.remote = "aws.dst"
@@ -102,8 +102,8 @@ resource "aws_vpc_peering_connection" "peering" {
   peer_region = "${data.aws_region.remote.name}"
 
   tags = "${merge(var.tags, map("Name", "Initiator: VPC Peering between default and remote",
-                                "accepter_vpc", var.peer_vpc_id,
-                                "initiator_vpc", var.this_vpc_id))}"
+                                "accepter_vpc", var.remote_vpc_id,
+                                "initiator_vpc", var.local_vpc_id))}"
 }
 
 # Accepter's side of the connection.
@@ -113,6 +113,6 @@ resource "aws_vpc_peering_connection_accepter" "remote" {
   auto_accept               = true
 
   tags = "${merge(var.tags, map("Name", "Accepter",
-                                "accepter_vpc", var.peer_vpc_id,
-                                "initiator_vpc", var.this_vpc_id))}"
+                                "accepter_vpc", var.remote_vpc_id,
+                                "initiator_vpc", var.local_vpc_id))}"
 }
