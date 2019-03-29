@@ -63,8 +63,6 @@ provider "aws" {
   alias = "remote"
 }
 
-data "aws_caller_identity" "current" {}
-
 data "aws_region" "remote" {
   provider = "aws.remote"
 }
