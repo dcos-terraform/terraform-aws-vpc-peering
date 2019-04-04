@@ -52,23 +52,22 @@ module "vpc_cross_region_peering" {
 }
 ```
 
-
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
-| local_main_route_table_id | Local main route table ID used to update access to remote network | string | `` | no |
-| local_subnet_range | Local VPC subnet range in CIDR format | string | - | yes |
-| local_vpc_id | Local VPC ID | string | - | yes |
-| remote_main_route_table_id | Remote main route table ID used to update access to local network | string | `` | no |
-| remote_subnet_range | Remote VPC subnet range in CIDR format | string | - | yes |
-| remote_vpc_id | Remote VPC ID | string | - | yes |
+| local\_main\_route\_table\_id | Local main route table ID used to update access to remote network | string | `""` | no |
+| local\_subnet\_range | Local VPC subnet range in CIDR format | string | n/a | yes |
+| local\_vpc\_id | Local VPC ID | string | n/a | yes |
+| remote\_main\_route\_table\_id | Remote main route table ID used to update access to local network | string | `""` | no |
+| remote\_subnet\_range | Remote VPC subnet range in CIDR format | string | n/a | yes |
+| remote\_vpc\_id | Remote VPC ID | string | n/a | yes |
 | tags | Add custom tags to all resources | map | `<map>` | no |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| local_vpc_route_table | Private route table |
-| remote_vpc_route_table | Public route table |
+| local\_vpc\_route\_table | Private route table |
+| remote\_vpc\_route\_table | Public route table |
 
