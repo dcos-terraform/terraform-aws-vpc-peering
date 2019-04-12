@@ -56,12 +56,12 @@ module "vpc_cross_region_peering" {
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
-| local\_main\_route\_table\_id | Local main route table ID used to update access to remote network | string | `""` | no |
 | local\_subnet\_range | Local VPC subnet range in CIDR format | string | n/a | yes |
 | local\_vpc\_id | Local VPC ID | string | n/a | yes |
-| remote\_main\_route\_table\_id | Remote main route table ID used to update access to local network | string | `""` | no |
 | remote\_subnet\_range | Remote VPC subnet range in CIDR format | string | n/a | yes |
 | remote\_vpc\_id | Remote VPC ID | string | n/a | yes |
+| local\_main\_route\_table\_id | Local main route table ID used to update access to remote network | string | `""` | no |
+| remote\_main\_route\_table\_id | Remote main route table ID used to update access to local network | string | `""` | no |
 | tags | Add custom tags to all resources | map | `<map>` | no |
 
 ## Outputs
