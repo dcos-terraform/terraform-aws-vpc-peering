@@ -72,7 +72,7 @@ module "vpc_cross_region_peering" {
 | this\_main\_route\_table\_id | This main route table ID used to update access to peer network | string | n/a | yes |
 | this\_security\_group\_id | This Security Group ID used to update access to peer network | string | n/a | yes |
 | this\_vpc\_id | This VPC ID | string | n/a | yes |
-| tags | Tags: map | map | `<map>` | no |
+| tags | Add custom tags to all resources | map | `<map>` | no |
 
 ## Outputs
 
