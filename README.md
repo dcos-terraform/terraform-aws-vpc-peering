@@ -60,25 +60,24 @@ module "vpc_cross_region_peering" {
 }
 ```
 
-
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
-| peer_cidr_block | Peer VPC CIDR Block | string | - | yes |
-| peer_main_route_table_id | Peer main route table ID used to update access to this network | string | - | yes |
-| peer_security_group_id | Peer Security Group ID used to update access to this network | string | - | yes |
-| peer_vpc_id | Peer VPC ID | string | - | yes |
-| tags | Tags: map | map | `<map>` | no |
-| this_cidr_block | This VPC CIDR Block | string | - | yes |
-| this_main_route_table_id | This main route table ID used to update access to peer network | string | - | yes |
-| this_security_group_id | This Security Group ID used to update access to peer network | string | - | yes |
-| this_vpc_id | This VPC ID | string | - | yes |
+| peer\_cidr\_block | Peer VPC CIDR Block | string | n/a | yes |
+| peer\_main\_route\_table\_id | Peer main route table ID used to update access to this network | string | n/a | yes |
+| peer\_security\_group\_id | Peer Security Group ID used to update access to this network | string | n/a | yes |
+| peer\_vpc\_id | Peer VPC ID | string | n/a | yes |
+| this\_cidr\_block | This VPC CIDR Block | string | n/a | yes |
+| this\_main\_route\_table\_id | This main route table ID used to update access to peer network | string | n/a | yes |
+| this\_security\_group\_id | This Security Group ID used to update access to peer network | string | n/a | yes |
+| this\_vpc\_id | This VPC ID | string | n/a | yes |
+| tags | Add custom tags to all resources | map | `<map>` | no |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| peer_vpc_route_table | Public route tables |
-| this_vpc_route_tables | Private route tables |
+| peer\_vpc\_route\_table | Public route tables |
+| this\_vpc\_route\_tables | Private route tables |
 
